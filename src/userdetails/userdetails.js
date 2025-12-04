@@ -23,16 +23,30 @@ export default function TravelPlannerApp() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Prevent same date selection for From and To
-if (name === "dateFrom" && value === formData.dateTo) {
-  alert("From Date and To Date cannot be the same.");
-  return;
-}
 
-if (name === "dateTo" && value === formData.dateFrom) {
-  alert("From Date and To Date cannot be the same.");
-  return;
-}
+    // Prevent same date selection
+    if (name === "dateFrom" && value === formData.dateTo) {
+      alert("From Date and To Date cannot be the same.");
+      return;
+    }
+
+    if (name === "dateTo" && value === formData.dateFrom) {
+      alert("To Date must be greater than From Date.");
+      return;
+    }
+
+    // Prevent To Date < From Date
+    if (name === "dateTo" && formData.dateFrom && value < formData.dateFrom) {
+      alert("To Date cannot be earlier than From Date.");
+      return;
+    }
+
+    // Prevent From Date > To Date
+    if (name === "dateFrom" && formData.dateTo && value > formData.dateTo) {
+      alert("From Date cannot be later than To Date.");
+      return;
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
@@ -86,7 +100,6 @@ if (name === "dateTo" && value === formData.dateFrom) {
 
   return (
     <div className="page-container">
-      {/* Header with Profile */}
       <div className="header">
         <div className="header-content">
           <h1 className="header-title">Travel Planner</h1>
@@ -111,16 +124,14 @@ if (name === "dateTo" && value === formData.dateFrom) {
         </div>
       </div>
 
-      {/* Main Form */}
       <div className="main-content">
         <div className="form-container">
           <h2 className="form-title">Plan Your Perfect Trip</h2>
           
           <div className="form-fields">
-            {/* Budget */}
+            
             <div className="field-group">
               <label className="field-label">
-                <DollarSign size={20} className="label-icon" />
                 Budget
               </label>
               <input
@@ -130,13 +141,12 @@ if (name === "dateTo" && value === formData.dateFrom) {
                 onChange={handleInputChange}
                 placeholder="Enter your budget"
                 className="input-field"
-              />
+             />
             </div>
 
-            {/* Destination */}
+
             <div className="field-group">
               <label className="field-label">
-                <MapPin size={20} className="label-icon" />
                 Destination
               </label>
               <input
@@ -149,7 +159,7 @@ if (name === "dateTo" && value === formData.dateFrom) {
               />
             </div>
 
-            {/* Number of Travelers */}
+
             <div className="field-group">
               <label className="field-label">
                 <Users size={20} className="label-icon" />
@@ -167,23 +177,22 @@ if (name === "dateTo" && value === formData.dateFrom) {
               </select>
             </div>
 
-            {/* Date Range */}
-            <div className="date-range-group">
+            {/* FIXED DATE SECTION */}
+            <div className="date-range-group" style={{ display: "flex", gap: "20px" }}>
               <div className="field-group">
                 <label className="field-label">
                   <Calendar size={20} className="label-icon" />
                   From Date
                 </label>
                 <input
-                type="date"
-                 name="dateTo"
-                 value={formData.dateTo}
-                 onChange={handleInputChange}
-                 min={formData.dateFrom ? new Date(new Date(formData.dateFrom).getTime() + 86400000).toISOString().split('T')[0] : ""} 
-                 className="input-field"
-               />
-
+                  type="date"
+                  name="dateFrom"
+                  value={formData.dateFrom}
+                  onChange={handleInputChange}
+                  className="input-field"
+                />
               </div>
+
               <div className="field-group">
                 <label className="field-label">
                   <Calendar size={20} className="label-icon" />
@@ -193,14 +202,13 @@ if (name === "dateTo" && value === formData.dateFrom) {
                   type="date"
                   name="dateTo"
                   value={formData.dateTo}
-                  onChange={handleInputChange}
                   min={formData.dateFrom}
+                  onChange={handleInputChange}
                   className="input-field"
                 />
               </div>
             </div>
 
-            {/* Travel Mode */}
             <div className="field-group">
               <label className="field-label-text">
                 Travel Mode (Select Multiple)
@@ -233,7 +241,6 @@ if (name === "dateTo" && value === formData.dateFrom) {
               </div>
             </div>
 
-            {/* Hotel Rating */}
             <div className="field-group">
               <label className="field-label">
                 <Hotel size={20} className="label-icon" />
@@ -253,7 +260,6 @@ if (name === "dateTo" && value === formData.dateFrom) {
               </select>
             </div>
 
-            {/* Food Type */}
             <div className="field-group">
               <label className="field-label">
                 <Utensils size={20} className="label-icon" />
@@ -271,7 +277,6 @@ if (name === "dateTo" && value === formData.dateFrom) {
               </select>
             </div>
 
-            {/* Find Button */}
             <button
               onClick={handleFindTrips}
               className="find-button"
