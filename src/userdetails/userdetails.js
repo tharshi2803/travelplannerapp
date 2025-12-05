@@ -1,15 +1,181 @@
 import React, { useState } from 'react';
-import { Calendar, User, MapPin, Users, DollarSign, Hotel, Utensils, Plane, Bus, Train } from 'lucide-react';
+import { Calendar, User, MapPin, Users, DollarSign, Hotel, Utensils, Plane, Bus, Train, Globe } from 'lucide-react';
 import './userdetails.css';
 
 export default function TravelPlannerApp() {
   const [currentPage, setCurrentPage] = useState('planning');
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showCurrencyMenu, setShowCurrencyMenu] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('USD - United States Dollar');
+  
+  const currencies = [
+    'AED - United Arab Emirates Dirham',
+    'AFN - Afghanistan Afghani',
+    'ALL - Albania Lek',
+    'AMD - Armenia Dram',
+    'ANG - Netherlands Antilles Guilder',
+    'AOA - Angola Kwanza',
+    'ARS - Argentina Peso',
+    'AUD - Australia Dollar',
+    'AWG - Aruba Guilder',
+    'AZN - Azerbaijan Manat',
+    'BAM - Bosnia and Herzegovina Convertible Mark',
+    'BBD - Barbados Dollar',
+    'BDT - Bangladesh Taka',
+    'BGN - Bulgaria Lev',
+    'BHD - Bahrain Dinar',
+    'BIF - Burundi Franc',
+    'BMD - Bermuda Dollar',
+    'BND - Brunei Darussalam Dollar',
+    'BOB - Bolivia Bolíviano',
+    'BRL - Brazil Real',
+    'BSD - Bahamas Dollar',
+    'BTN - Bhutan Ngultrum',
+    'BWP - Botswana Pula',
+    'BYN - Belarus Ruble',
+    'BZD - Belize Dollar',
+    'CAD - Canada Dollar',
+    'CDF - Congo/Kinshasa Franc',
+    'CHF - Switzerland Franc',
+    'CLP - Chile Peso',
+    'CNY - China Yuan Renminbi',
+    'COP - Colombia Peso',
+    'CRC - Costa Rica Colon',
+    'CUP - Cuba Peso',
+    'CVE - Cape Verde Escudo',
+    'CZK - Czech Republic Koruna',
+    'DJF - Djibouti Franc',
+    'DKK - Denmark Krone',
+    'DOP - Dominican Republic Peso',
+    'DZD - Algeria Dinar',
+    'EGP - Egypt Pound',
+    'ERN - Eritrea Nakfa',
+    'ETB - Ethiopia Birr',
+    'EUR - Euro Member Countries',
+    'FJD - Fiji Dollar',
+    'FKP - Falkland Islands Pound',
+    'GBP - United Kingdom Pound',
+    'GEL - Georgia Lari',
+    'GGP - Guernsey Pound',
+    'GHS - Ghana Cedi',
+    'GIP - Gibraltar Pound',
+    'GMD - Gambia Dalasi',
+    'GNF - Guinea Franc',
+    'GTQ - Guatemala Quetzal',
+    'GYD - Guyana Dollar',
+    'HKD - Hong Kong Dollar',
+    'HNL - Honduras Lempira',
+    'HRK - Croatia Kuna',
+    'HTG - Haiti Gourde',
+    'HUF - Hungary Forint',
+    'IDR - Indonesia Rupiah',
+    'ILS - Israel Shekel',
+    'IMP - Isle of Man Pound',
+    'INR - India Rupee',
+    'IQD - Iraq Dinar',
+    'IRR - Iran Rial',
+    'ISK - Iceland Krona',
+    'JEP - Jersey Pound',
+    'JMD - Jamaica Dollar',
+    'JOD - Jordan Dinar',
+    'JPY - Japan Yen',
+    'KES - Kenya Shilling',
+    'KGS - Kyrgyzstan Som',
+    'KHR - Cambodia Riel',
+    'KMF - Comoros Franc',
+    'KPW - Korea North Won',
+    'KRW - Korea South Won',
+    'KWD - Kuwait Dinar',
+    'KYD - Cayman Islands Dollar',
+    'KZT - Kazakhstan Tenge',
+    'LAK - Laos Kip',
+    'LBP - Lebanon Pound',
+    'LKR - Sri Lanka Rupee',
+    'LRD - Liberia Dollar',
+    'LSL - Lesotho Loti',
+    'LYD - Libya Dinar',
+    'MAD - Morocco Dirham',
+    'MDL - Moldova Leu',
+    'MGA - Madagascar Ariary',
+    'MKD - Macedonia Denar',
+    'MMK - Myanmar Kyat',
+    'MNT - Mongolia Tughrik',
+    'MOP - Macau Pataca',
+    'MRU - Mauritania Ouguiya',
+    'MUR - Mauritius Rupee',
+    'MVR - Maldives Rufiyaa',
+    'MWK - Malawi Kwacha',
+    'MXN - Mexico Peso',
+    'MYR - Malaysia Ringgit',
+    'MZN - Mozambique Metical',
+    'NAD - Namibia Dollar',
+    'NGN - Nigeria Naira',
+    'NIO - Nicaragua Cordoba',
+    'NOK - Norway Krone',
+    'NPR - Nepal Rupee',
+    'NZD - New Zealand Dollar',
+    'OMR - Oman Rial',
+    'PAB - Panama Balboa',
+    'PEN - Peru Sol',
+    'PGK - Papua New Guinea Kina',
+    'PHP - Philippines Peso',
+    'PKR - Pakistan Rupee',
+    'PLN - Poland Zloty',
+    'PYG - Paraguay Guarani',
+    'QAR - Qatar Riyal',
+    'RON - Romania Leu',
+    'RSD - Serbia Dinar',
+    'RUB - Russia Ruble',
+    'RWF - Rwanda Franc',
+    'SAR - Saudi Arabia Riyal',
+    'SBD - Solomon Islands Dollar',
+    'SCR - Seychelles Rupee',
+    'SDG - Sudan Pound',
+    'SEK - Sweden Krona',
+    'SGD - Singapore Dollar',
+    'SHP - Saint Helena Pound',
+    'SLL - Sierra Leone Leone',
+    'SOS - Somalia Shilling',
+    'SPL - Seborga Luigino',
+    'SRD - Suriname Dollar',
+    'STN - São Tomé and Príncipe Dobra',
+    'SVC - El Salvador Colon',
+    'SYP - Syria Pound',
+    'SZL - Eswatini Lilangeni',
+    'THB - Thailand Baht',
+    'TJS - Tajikistan Somoni',
+    'TMT - Turkmenistan Manat',
+    'TND - Tunisia Dinar',
+    'TOP - Tonga Paanga',
+    'TRY - Turkey Lira',
+    'TTD - Trinidad and Tobago Dollar',
+    'TVD - Tuvalu Dollar',
+    'TWD - Taiwan New Dollar',
+    'TZS - Tanzania Shilling',
+    'UAH - Ukraine Hryvnia',
+    'UGX - Uganda Shilling',
+    'USD - United States Dollar',
+    'UYU - Uruguay Peso',
+    'UZS - Uzbekistan Som',
+    'VEF - Venezuela Bolívar',
+    'VND - Vietnam Dong',
+    'VUV - Vanuatu Vatu',
+    'WST - Samoa Tala',
+    'XAF - Central African CFA Franc',
+    'XCD - East Caribbean Dollar',
+    'XOF - West African CFA Franc',
+    'XPF - CFP Franc',
+    'YER - Yemen Rial',
+    'ZAR - South Africa Rand',
+    'ZMW - Zambia Kwacha',
+    'ZWD - Zimbabwe Dollar'
+  ];
   
   const [formData, setFormData] = useState({
     budget: '',
+    from: '',
     destination: '',
-    travelers: '1',
+    travelers: '',
     dateFrom: '',
     dateTo: '',
     travelModes: {
@@ -23,6 +189,30 @@ export default function TravelPlannerApp() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    // Validation for 'from' field - only strings
+    if (name === 'from') {
+      if (value && !/^[a-zA-Z\s]*$/.test(value)) {
+        alert('Only strings are accepted for From field');
+        return;
+      }
+    }
+
+    // Validation for 'destination' field - only strings
+    if (name === 'destination') {
+      if (value && !/^[a-zA-Z\s]*$/.test(value)) {
+        alert('Only strings are accepted for Destination field');
+        return;
+      }
+    }
+
+    // Validation for 'travelers' field - only numbers
+    if (name === 'travelers') {
+      if (value && !/^\d*$/.test(value)) {
+        alert('Only numbers are accepted for Number of Travelers');
+        return;
+      }
+    }
 
     // Prevent same date selection
     if (name === "dateFrom" && value === formData.dateTo) {
@@ -65,8 +255,13 @@ export default function TravelPlannerApp() {
     setShowProfileMenu(false);
   };
 
+  const handleCurrencySelect = (currency) => {
+    setSelectedCurrency(currency);
+    setShowCurrencyMenu(false);
+  };
+
   const handleFindTrips = () => {
-    if (!formData.budget || !formData.destination || !formData.dateFrom || !formData.dateTo) {
+    if (!formData.budget || !formData.from || !formData.destination || !formData.travelers || !formData.dateFrom || !formData.dateTo) {
       alert('Please fill in all required fields');
       return;
     }
@@ -79,8 +274,9 @@ export default function TravelPlannerApp() {
         <div className="results-container">
           <h1 className="results-title">Your Trip Details</h1>
           <div className="results-content">
+            <p className="result-item"><strong>From:</strong> {formData.from}</p>
             <p className="result-item"><strong>Destination:</strong> {formData.destination}</p>
-            <p className="result-item"><strong>Budget:</strong> ${formData.budget}</p>
+            <p className="result-item"><strong>Budget:</strong> {selectedCurrency.split(' - ')[0]} {formData.budget}</p>
             <p className="result-item"><strong>Travelers:</strong> {formData.travelers}</p>
             <p className="result-item"><strong>Dates:</strong> {formData.dateFrom} to {formData.dateTo}</p>
             <p className="result-item"><strong>Travel Modes:</strong> {Object.keys(formData.travelModes).filter(k => formData.travelModes[k]).join(', ') || 'None selected'}</p>
@@ -103,23 +299,55 @@ export default function TravelPlannerApp() {
       <div className="header">
         <div className="header-content">
           <h1 className="header-title">Travel Planner</h1>
-          <div className="profile-wrapper">
-            <button 
-              onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="profile-button"
-            >
-              <User size={28} />
-            </button>
-            {showProfileMenu && (
-              <div className="profile-menu">
-                <button 
-                  onClick={handleSignOut}
-                  className="signout-button"
-                >
-                  Sign Out
-                </button>
-              </div>
-            )}
+          <div className="header-right">
+            <div className="currency-wrapper">
+              <button 
+                onClick={() => {
+                  setShowCurrencyMenu(!showCurrencyMenu);
+                  setShowProfileMenu(false);
+                }}
+                className="currency-button"
+              >
+                <Globe size={28} />
+              </button>
+              {showCurrencyMenu && (
+                <div className="currency-menu">
+                  <div className="currency-menu-header">Select Currency</div>
+                  <div className="currency-list">
+                    {currencies.map((currency) => (
+                      <button
+                        key={currency}
+                        onClick={() => handleCurrencySelect(currency)}
+                        className={`currency-item ${selectedCurrency === currency ? 'currency-item-active' : ''}`}
+                      >
+                        {currency}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="profile-wrapper">
+              <button 
+                onClick={() => {
+                  setShowProfileMenu(!showProfileMenu);
+                  setShowCurrencyMenu(false);
+                }}
+                className="profile-button"
+              >
+                <User size={28} />
+              </button>
+              {showProfileMenu && (
+                <div className="profile-menu">
+                  <button 
+                    onClick={handleSignOut}
+                    className="signout-button"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -132,7 +360,8 @@ export default function TravelPlannerApp() {
             
             <div className="field-group">
               <label className="field-label">
-                Budget
+                <DollarSign size={20} className="label-icon" />
+                Budget ({selectedCurrency.split(' - ')[0]})
               </label>
               <input
                 type="number"
@@ -144,9 +373,24 @@ export default function TravelPlannerApp() {
              />
             </div>
 
+            <div className="field-group">
+              <label className="field-label">
+                <MapPin size={20} className="label-icon" />
+                From
+              </label>
+              <input
+                type="text"
+                name="from"
+                value={formData.from}
+                onChange={handleInputChange}
+                placeholder="Enter origin city"
+                className="input-field"
+              />
+            </div>
 
             <div className="field-group">
               <label className="field-label">
+                <MapPin size={20} className="label-icon" />
                 Destination
               </label>
               <input
@@ -159,22 +403,19 @@ export default function TravelPlannerApp() {
               />
             </div>
 
-
             <div className="field-group">
               <label className="field-label">
                 <Users size={20} className="label-icon" />
                 Number of Travelers
               </label>
-              <select
+              <input
+                type="text"
                 name="travelers"
                 value={formData.travelers}
                 onChange={handleInputChange}
-                className="select-field"
-              >
-                {[1,2,3,4,5,6,7,8,9,10].map(num => (
-                  <option key={num} value={num}>{num} {num === 1 ? 'Traveler' : 'Travelers'}</option>
-                ))}
-              </select>
+                placeholder="Enter number of travelers"
+                className="input-field"
+              />
             </div>
 
             {/* FIXED DATE SECTION */}

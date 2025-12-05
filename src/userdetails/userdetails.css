@@ -25,6 +25,92 @@
   color: #f4f4f4;
 }
 
+/* Header Right Section */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Currency Menu Styles */
+.currency-wrapper {
+  position: relative;
+}
+
+.currency-button {
+  padding: 0.5rem;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #F4F4F4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.currency-button:hover {
+  background-color: #1d546c;
+}
+
+.currency-menu {
+  position: absolute;
+  right: 0;
+  margin-top: 0.5rem;
+  width: 20rem;
+  background-color: #F4F4F4;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #d1d5db;
+  z-index: 50;
+  max-height: 400px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.currency-menu-header {
+  padding: 0.75rem 1rem;
+  background-color: #0c2b4e;
+  color: #F4F4F4;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.currency-list {
+  overflow-y: auto;
+  max-height: 350px;
+}
+
+.currency-item {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  color: #1d546c;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.currency-item:hover {
+  background-color: #e5e7eb;
+}
+
+.currency-item-active {
+  background-color: #1d546c;
+  color: #F4F4F4;
+}
+
+.currency-item-active:hover {
+  background-color: #0c2b4e;
+}
+
 /* Profile Menu Styles */
 .profile-wrapper {
   position: relative;
@@ -38,6 +124,9 @@
   cursor: pointer;
   transition: background-color 0.3s;
   color: #F4F4F4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-button:hover {
@@ -292,6 +381,14 @@
 
   .header-title {
     font-size: 1.25rem;
+  }
+
+  .header-right {
+    gap: 0.5rem;
+  }
+
+  .currency-menu {
+    width: 16rem;
   }
 
   .main-content {
