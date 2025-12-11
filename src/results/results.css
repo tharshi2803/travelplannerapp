@@ -1,117 +1,98 @@
-.results-page {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
+/* Container */
+.travel-plan-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
   font-family: 'Poppins', sans-serif;
+  color: #0C2B4E;
+  background: #F4F4F4;
+  border-radius: 15px;
 }
 
-/* Background */
-.background {
-  background: url('https://images.pexels.com/photos/1095624/pexels-photo-1095624.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260') center top no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: -2;
-}
-
-.background-texture {
-  background: linear-gradient(to top right, rgba(10, 10, 50, 0.9), rgba(255, 180, 100, 0.7));
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: -1;
-}
-
-/* Title */
-.results-title {
-  color: white;
-  font-size: 2.2rem;
+/* Page Title */
+.travel-plan-container h1 {
   text-align: center;
-  margin-top: 70px;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #1D546C;
 }
 
-/* Filters */
-.filter-buttons {
+/* Card Styles */
+.card {
+  background: linear-gradient(145deg, #1A3D64, #1D546C);
+  color: #F4F4F4;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  background: linear-gradient(145deg, #1D546C, #1A3D64);
+}
+
+.card .icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+  color: #F4F4F4;
+}
+
+.card p, .card ul {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+/* Restaurants List */
+.card.restaurants-card ul {
+  list-style: disc inside;
+  padding-left: 10px;
+}
+
+/* Itinerary Preformatted Text */
+.card.itinerary-card pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Loading Spinner */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  font-size: 1.2rem;
+  color: #1D546C;
+}
+
+.spinner {
+  border: 5px solid rgba(255,255,255,0.3);
+  border-top: 5px solid #F4F4F4;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 15px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.login-page {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin: 25px 0;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  color: white;
-  padding: 10px 18px;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-}
-.filter-btn:hover, .filter-btn.active {
-  background: #ffb84d;
-  color: #1a1a1a;
-  border-color: #ffb84d;
-}
-
-/* Results Grid */
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 25px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Card styling */
-.result-card {
-  position: relative;
-  border-radius: 18px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  transform: translateY(30px);
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-@keyframes fadeUp {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.card-img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.result-card:hover .card-img {
-  transform: scale(1.1);
-}
-
-.card-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-  color: #fff;
-}
-
-.card-overlay h3 {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-}
-
-.card-overlay p {
-  font-size: 0.9rem;
-  opacity: 0.9;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(90deg, #87CEEB, #003580);
 }
